@@ -29,7 +29,7 @@
   <dt>Context</dt><dd>Undergraduate thesis in economics, CUNEF University. Defended June 2025, graded 9 out of 10.</dd>
   <dt>Role</dt><dd>Sole author</dd>
   <dt>Data</dt><dd>Eurostat youth activity rate (ages 15 to 24), 14 countries, 2010 to 2022</dd>
-  <dt>Methods</dt><dd>Generalized synthetic control with interactive fixed effects (Xu, 2017) and an autoregressive specification, placebo tests, 1,000 bootstrap replications</dd>
+  <dt>Methods</dt><dd>Generalized synthetic control with interactive fixed effects (Xu, 2017), placebo tests, 1,000 bootstrap replications</dd>
   <dt>Tools</dt><dd>R (gsynth)</dd>
   <dt>Read more</dt><dd><a href="../Alfonso-Vega-de-Seoane-Writing-Sample.pdf">Writing sample, 4 pages (PDF)</a></dd>
 </dl>
@@ -40,7 +40,7 @@
 
 <h2>Approach</h2>
 <p>The comparison pool was 13 countries with no comparable wage shock of their own in 2019 and broadly similar economies and institutions: Belgium, Croatia, Czechia, Estonia, France, Hungary, Ireland, Latvia, Malta, the Netherlands, Poland, Portugal and Slovenia. The model learns the common patterns in their series and how Spain's pre-reform path loads on them, then projects what Spain would have looked like without the increase.</p>
-<p>The key judgment call came early. My first model followed the classical recipe and matched Spain on economic predictors: GDP per capita, youth unemployment, part-time work, enrollment, the NEET share and education spending. It didn't fit. Synthetic Spain drifted above the real series from 2015 and finished the pre-reform period more than a point too high, and in this design the pre-reform fit is the whole argument. Significance tests, cointegration checks and cross-correlations all said the predictors were adding parameters without adding fit, so I switched to an autoregressive model: the only predictor is the youth activity rate's own past values. I estimated it with gsynth, a synthetic control with interactive fixed effects that recovers the common structure from the outcome series themselves.</p>
+<p>The key judgment call came early. My first model followed the classical recipe and matched Spain on economic predictors: GDP per capita, youth unemployment, part-time work, enrollment, the NEET share and education spending. It didn't fit. Synthetic Spain drifted above the real series from 2015 and finished the pre-reform period more than a point too high, and in this design the pre-reform fit is the whole argument. Significance tests, cointegration checks and cross-correlations all said the predictors were adding parameters without adding fit, so I dropped them. The final model is gsynth with interactive fixed effects and no predictors: it estimates Spain's path from its own series and the comparison with the other countries, which captures unobserved factors that affect all of them.</p>
 
 <h2>Result</h2>
 <figure>
@@ -108,7 +108,7 @@
   </figcaption>
 </figure>
 <p>The placebo test is the decisive check. Running the same model as if each comparison country had been treated in 2019 produces gaps as large as Spain's or larger, in both directions. A synthetic-control gap can only be read as causal when the treated country is a clear outlier, and Spain isn't one.</p>
-<p>Four things limit what this design can say. The treatment is coded as on or off, which ignores that the increase bit much harder in some sectors, regions and wage levels than in others. The data are annual and aggregate, with four post-reform years, one of them 2020. Using only the outcome's own past keeps the model stable, but it could miss education or economic changes that happened at the same time. And it rests on a single identification strategy. The design could have detected a large effect and didn't find one, but it can't tell a true zero apart from an effect that is small or slow to appear. The result is also compatible with Banco de España's finding of job losses among young workers after the same reform, because employment and participation are different margins.</p>
+<p>Four things limit what this design can say. The treatment is coded as on or off, which ignores that the increase bit much harder in some sectors, regions and wage levels than in others. The data are annual and aggregate, with four post-reform years, one of them 2020. Leaving out predictors keeps the model stable, but it could miss education or economic changes that happened at the same time. And it rests on a single identification strategy. The design could have detected a large effect and didn't find one, but it can't tell a true zero apart from an effect that is small or slow to appear. The result is also compatible with Banco de España's finding of job losses among young workers after the same reform, because employment and participation are different margins.</p>
 
 <h2>What I would do differently</h2>
 <p>Start from microdata. The Spanish Labour Force Survey would let me build a continuous measure of exposure from each worker's distance to the new floor, with the cross-country panel as a robustness check instead of the headline. I would also want difference-in-differences and a design built around the wage distribution to point the same way before trusting any single estimate.</p>
