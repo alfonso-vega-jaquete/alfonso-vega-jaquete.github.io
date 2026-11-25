@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A gender pay gap that was a parenthood gap · Alfonso Vega de Seoane</title>
+<meta name="description" content="Nested regressions on 1,500 employees show a 20.8% gender pay gap that, after controls, sits almost entirely with parents. Team case study.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://alfonso-vega-jaquete.github.io/work/pay-gap-parenthood.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A gender pay gap that turned out to be a parenthood gap">
+<meta property="og:description" content="Pay-equity analysis with nested regressions and a gender by parenthood interaction. Case study by Alfonso Vega de Seoane.">
+<meta property="og:url" content="https://alfonso-vega-jaquete.github.io/work/pay-gap-parenthood.html">
+<meta property="og:image" content="https://alfonso-vega-jaquete.github.io/assets/og-card.jpg">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="case-page">
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Alfonso Vega de Seoane</a><span aria-hidden="true">/</span><a href="../index.html#work">Selected work</a></nav>
+<main id="main">
+<article>
+<h1>A gender pay gap that turned out to be a parenthood gap</h1>
+<p class="lede">Men at BSR earned 20.8% more than women. Controlling for level, job family, tenure and location cut the gap to about $5,800, and almost all of what remained sat with parents: among childless employees the gap wasn't statistically different from zero.</p>
+
+<dl class="glance">
+  <dt>Context</dt><dd>Using Data to Lead Change, Georgetown MSBA, August 2026. Course case on BSR, an insurer, with a dataset of 1,500 employees.</dd>
+  <dt>Team</dt><dd>Sheng Chi Lin, Marzia Fahimi, Andre Pizarro, Ananya Sayani and me</dd>
+  <dt>My part</dt><dd>Much of the analysis in R and the recommendations</dd>
+  <dt>Methods</dt><dd>Group comparisons with sample-size checks, nested OLS regressions, a gender by parenthood interaction</dd>
+  <dt>Tools</dt><dd>R (tidyverse)</dd>
+  <dt>Delivered</dt><dd>An executive memo and a presentation to the leadership team</dd>
+</dl>
+
+<h2>Problem</h2>
+<p>BSR's executives wanted to know whether the company had a gender pay gap and what was driving it. The raw answer was clear: men averaged $89,544 and women $74,098, a gap of $15,446 or 20.8% (p &lt; .0001).</p>
+
+<h2>Approach</h2>
+<p>We added controls one at a time. Employee level alone explained 57% of the raw gap, because women held half of junior roles but only 36.5% of director seats. With level, job family, tenure and location in the model, a gap of about $5,800 remained.</p>
+<p>The judgment call was not stopping at that number. We split the workforce by parental status and interacted gender with it, which showed where the remaining gap actually lives.</p>
+
+<h2>Result</h2>
+<figure>
+  <p class="fig-title">Without children, women reach management more often than men. With children, the pattern reverses.</p>
+  <p class="fig-sub">Share of employees in Manager or Director roles, %</p>
+  <ul class="legend">
+    <li><span class="key k-s1" aria-hidden="true"></span>Women</li>
+    <li><span class="key k-s2" aria-hidden="true"></span>Men</li>
+  </ul>
+  <div class="gbars" style="--max:40">
+    <div class="group"><p class="gname">No children</p>
+      <div class="row base"><span class="bar s1" style="--v:17.7"></span><span class="val" style="--v:17.7"><span class="sr">Women: </span>17.7%</span></div>
+      <div class="row base"><span class="bar s2" style="--v:11.0"></span><span class="val" style="--v:11.0"><span class="sr">Men: </span>11.0%</span></div>
+    </div>
+    <div class="group"><p class="gname">With children</p>
+      <div class="row base"><span class="bar s1" style="--v:19.3"></span><span class="val" style="--v:19.3"><span class="sr">Women: </span>19.3%</span></div>
+      <div class="row base"><span class="bar s2" style="--v:31.2"></span><span class="val" style="--v:31.2"><span class="sr">Men: </span>31.2%</span></div>
+    </div>
+  </div>
+  <figcaption>Source: BSR course dataset, 1,500 employees. Current level, not observed promotions.
+  <details class="numbers"><summary>Show the numbers</summary>
+    <div class="scroll"><table>
+      <thead><tr><th scope="col">Group</th><th scope="col">In Manager or Director roles</th><th scope="col">Employees</th></tr></thead>
+      <tbody>
+        <tr><td>Women, no children</td><td>17.7%</td><td>406</td></tr>
+        <tr><td>Men, no children</td><td>11.0%</td><td>346</td></tr>
+        <tr><td>Women, with children</td><td>19.3%</td><td>331</td></tr>
+        <tr><td>Men, with children</td><td>31.2%</td><td>417</td></tr>
+      </tbody>
+    </table></div>
+  </details>
+  </figcaption>
+</figure>
+<p>Among childless employees the gender coefficient was small and not significant (p = .15). Among parents the gap was about $7,500 wider (p = .001). The same split shows up in who reaches management: 31.2% of fathers hold Manager or Director roles against 19.3% of mothers, while childless women lead childless men, 17.7% to 11.0%. The pay gap is also close to zero for employees with under five years of tenure and about 37% for those with five to ten, the stretch of a career when most promotions into management happen.</p>
+<p>We recommended one targeted program instead of company-wide fixes: an annual pay-equity review segmented by parental status, with real corrections, and uniform, documented criteria for raises and promotions of employees with children.</p>
+
+<h2>Robustness and limits</h2>
+<p>Several patterns didn't survive a second look. Age and tenure are nearly identical by gender, so they explain none of the gap. Office location looked striking in the raw numbers but added nothing once level, job family and tenure were controlled. And recent hires looked equitable only because 96% of them were still junior, where the gap is small for everyone.</p>
+<p>The data are a single snapshot, so reaching management means current level, not observed promotions, and the analysis shows where the gap sits rather than why each decision was made.</p>
+
+<h2>What I would do differently</h2>
+<p>Ask for yearly records. The story depends on timing, pay and level before and after a first child, which a snapshot can't show. With a panel, an event-study design in the spirit of Kleven et al. (2019) would test the child-penalty mechanism directly instead of inferring it.</p>
+</article>
+</main>
+<nav class="next" aria-label="Next case">Next case<br><a href="attrition-risk.html">Ranking employees by attrition risk finds twice as many leavers as chance</a></nav>
+<footer>© 2026 Alfonso Vega de Seoane · <a href="../index.html#contact">Contact</a></footer>
+</div>
+</body>
+</html>

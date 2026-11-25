@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ranking employees by attrition risk · Alfonso Vega de Seoane</title>
+<meta name="description" content="An attrition model that reaches twice as many leavers as a random list, after removing a data leak that faked an AUC of 0.95.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://alfonso-vega-jaquete.github.io/work/attrition-risk.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ranking employees by attrition risk finds twice as many leavers as chance">
+<meta property="og:description" content="Random forest and neural network, honest evaluation and a fairness-aware version. Case study by Alfonso Vega de Seoane.">
+<meta property="og:url" content="https://alfonso-vega-jaquete.github.io/work/attrition-risk.html">
+<meta property="og:image" content="https://alfonso-vega-jaquete.github.io/assets/og-card.jpg">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="case-page">
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Alfonso Vega de Seoane</a><span aria-hidden="true">/</span><a href="../index.html#work">Selected work</a></nav>
+<main id="main">
+<article>
+<h1>Ranking employees by attrition risk finds twice as many leavers as chance</h1>
+<p class="lede">Canterra loses about 600 of its 4,000 employees a year. My model ranks every employee by risk: a list of the riskiest 1,000 would include about 320 of the year's leavers, against 150 for a random list of the same size.</p>
+
+<dl class="glance">
+  <dt>Context</dt><dd>Advanced Machine Learning and AI, Georgetown MSBA, November 2026. Course dataset of 1,470 employees.</dd>
+  <dt>Role</dt><dd>Sole author</dd>
+  <dt>Methods</dt><dd>Random forest and neural network with a logistic-regression benchmark, cross-validation, permutation importance, partial dependence</dd>
+  <dt>Tools</dt><dd>Python (pandas, scikit-learn)</dd>
+</dl>
+
+<h2>Problem</h2>
+<p>Canterra loses about 15% of its workforce every year. HR can't meet all 4,000 employees and had no way to tell who was about to leave. The questions were who is most likely to go, why, and what management can do about it.</p>
+
+<h2>Approach</h2>
+<p>The most important decision came before any model. The file listed every employee three times under different IDs, so a random split put copies of the same person in both the training and the test data. With the copies kept, 90% of test rows had a twin in training and the random forest scored an AUC of 0.95. After collapsing the file to 1,470 real people, the honest test AUC was about 0.67, and 0.73 on average across ten different splits.</p>
+<p>From there I tuned a random forest and a neural network with five-fold cross-validation, selecting on AUC because accuracy is meaningless when 84% of employees stay, and used the test set once. A plain logistic regression matched both, a sign that the drivers act in a fairly simple, additive way. I recommended the network because it overfit less and varied less across splits.</p>
+
+<h2>Result</h2>
+<figure>
+  <p class="fig-title">Contacting the riskiest quarter of staff reaches about half of all leavers</p>
+  <p class="fig-sub">Share of the year's leavers reached, by share of employees contacted, %</p>
+  <ul class="legend">
+    <li><span class="key k-s1" aria-hidden="true"></span>Highest-risk employees first</li>
+    <li><span class="key k-ctx" aria-hidden="true"></span>Random list</li>
+  </ul>
+  <div class="gbars" style="--max:100">
+    <div class="group"><p class="gname">Contact 10% of staff</p>
+      <div class="row base"><span class="bar s1" style="--v:30"></span><span class="val" style="--v:30"><span class="sr">Highest risk first: </span>30%</span></div>
+      <div class="row base"><span class="bar ctx" style="--v:10"></span><span class="val soft" style="--v:10"><span class="sr">Random list: </span>10%</span></div>
+    </div>
+    <div class="group"><p class="gname">Contact 25% of staff</p>
+      <div class="row base"><span class="bar s1" style="--v:53"></span><span class="val" style="--v:53"><span class="sr">Highest risk first: </span>53%</span></div>
+      <div class="row base"><span class="bar ctx" style="--v:25"></span><span class="val soft" style="--v:25"><span class="sr">Random list: </span>25%</span></div>
+    </div>
+    <div class="group"><p class="gname">Contact 50% of staff</p>
+      <div class="row base"><span class="bar s1" style="--v:75"></span><span class="val" style="--v:75"><span class="sr">Highest risk first: </span>75%</span></div>
+      <div class="row base"><span class="bar ctx" style="--v:50"></span><span class="val soft" style="--v:50"><span class="sr">Random list: </span>50%</span></div>
+    </div>
+  </div>
+  <figcaption>Neural network, average of ten test splits. A random list reaches the same share of leavers as of staff.
+  <details class="numbers"><summary>Show the numbers</summary>
+    <div class="scroll"><table>
+      <thead><tr><th scope="col">Staff contacted</th><th scope="col">Of 4,000</th><th scope="col">Leavers reached, model</th><th scope="col">Random list</th></tr></thead>
+      <tbody>
+        <tr><td>Top 10%</td><td>400</td><td>about 180 (30%)</td><td>60 (10%)</td></tr>
+        <tr><td>Top 25%</td><td>1,000</td><td>about 320 (53%)</td><td>150 (25%)</td></tr>
+        <tr><td>Top 50%</td><td>2,000</td><td>about 450 (75%)</td><td>300 (50%)</td></tr>
+      </tbody>
+    </table></div>
+  </details>
+  </figcaption>
+</figure>
+<p>Scaled to Canterra, the riskiest 1,000 employees would include about 320 of the year's 600 leavers, twice what a random list of the same size reaches. The drivers are mostly things management controls: frequent business travel (25% predicted risk against 13% for employees who don't travel) and low job or environment satisfaction. Pay made no meaningful difference.</p>
+<p>I recommended a quarterly risk list for targeted retention conversations, a review of frequent travel, and a random comparison group kept for two quarters so the program's real effect can be measured before it is scaled.</p>
+
+<h2>Robustness and limits</h2>
+<p>A version without age, gender and marital status ranks slightly worse (AUC 0.72 against 0.76 in cross-validation) but never flags anyone for who they are, so it's the one I recommended using. The drivers are associations, not causes, and with 71 leavers in the test set results move between splits. Resignations and dismissals are combined, and the file has no overtime, performance or promotion data.</p>
+
+<h2>What I would do differently</h2>
+<p>Ask for better data before chasing a better model. Gradient boosting, a three-model average and engineered features all landed within noise of the same ceiling, around 0.75. Overtime, promotions, raises and exit reasons would move that ceiling more than any tuning.</p>
+</article>
+</main>
+<nav class="next" aria-label="Back to all work">More work<br><a href="../index.html#work">Back to selected work</a></nav>
+<footer>© 2026 Alfonso Vega de Seoane · <a href="../index.html#contact">Contact</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minimum wage and youth participation in Spain · Alfonso Vega de Seoane</title>
+<meta name="description" content="A synthetic control study of Spain's 2019 minimum-wage increase: no detectable effect on youth labor-force participation, with placebo tests and limits.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://alfonso-vega-jaquete.github.io/work/minimum-wage-spain.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spain's 22% minimum-wage increase had no detectable effect on youth participation">
+<meta property="og:description" content="Synthetic control on 14 European countries, 2010 to 2022. Case study by Alfonso Vega de Seoane.">
+<meta property="og:url" content="https://alfonso-vega-jaquete.github.io/work/minimum-wage-spain.html">
+<meta property="og:image" content="https://alfonso-vega-jaquete.github.io/assets/og-card.jpg">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+<noscript><style>.chart{display:none}</style></noscript>
+</head>
+<body class="case-page">
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Alfonso Vega de Seoane</a><span aria-hidden="true">/</span><a href="../index.html#work">Selected work</a></nav>
+<main id="main">
+<article>
+<h1>Spain's 22% minimum-wage increase had no detectable effect on youth participation</h1>
+<p class="lede">I built a synthetic Spain from 13 European countries that tracks the real one closely before 2019. After the increase the gap stays small, its confidence interval includes zero in every year, and Spain sits in the middle of the placebo countries. The data don't support a causal claim in either direction.</p>
+
+<dl class="glance">
+  <dt>Context</dt><dd>Undergraduate thesis in economics, CUNEF University. Defended June 2025, graded 9 out of 10.</dd>
+  <dt>Role</dt><dd>Sole author</dd>
+  <dt>Data</dt><dd>Eurostat youth activity rate (ages 15 to 24), 14 countries, 2010 to 2022</dd>
+  <dt>Methods</dt><dd>Generalized synthetic control with interactive fixed effects (Xu, 2017), placebo tests, 1,000 bootstrap replications</dd>
+  <dt>Tools</dt><dd>R (gsynth)</dd>
+  <dt>Read more</dt><dd><a href="../Alfonso-Vega-de-Seoane-Writing-Sample.pdf">Writing sample, 4 pages (PDF)</a></dd>
+</dl>
+
+<h2>The question</h2>
+<p>In January 2019 Spain raised its minimum wage from €735.90 to €900 a month, a 22% increase in one step and the largest in over forty years. Most of the debate was about jobs. I looked at participation instead: whether young people are in the labor market at all, either working or looking for work.</p>
+<p>Theory doesn't settle it. A higher wage makes work more attractive, which should pull young people in, but it can also make a first job harder to land, which pushes some out of the search altogether. Spanish youth participation had already fallen from 42.7% in 2010 to about 33% by 2018, against an EU average closer to 40%.</p>
+
+<h2>Approach</h2>
+<p>The comparison pool was 13 countries with no comparable wage shock of their own in 2019 and broadly similar economies and institutions: Belgium, Croatia, Czechia, Estonia, France, Hungary, Ireland, Latvia, Malta, the Netherlands, Poland, Portugal and Slovenia. The model learns the common patterns in their series and how Spain's pre-reform path loads on them, then projects what Spain would have looked like without the increase.</p>
+<p>The key judgment call came early. My first model followed the classical recipe and matched Spain on economic predictors: GDP per capita, youth unemployment, part-time work, enrollment, the NEET share and education spending. It didn't fit. Synthetic Spain drifted above the real series from 2015 and finished the pre-reform period more than a point too high, and in this design the pre-reform fit is the whole argument. Significance tests, cointegration checks and cross-correlations all said the predictors were adding parameters without adding fit, so I dropped them. The final model is gsynth with interactive fixed effects and no covariates, which recovers the common structure from the outcome series themselves.</p>
+
+<h2>Result</h2>
+<figure>
+  <p class="fig-title">Synthetic Spain matches the real one before 2019, then recovers faster</p>
+  <p class="fig-sub">Youth activity rate, ages 15 to 24, %</p>
+  <ul class="legend">
+    <li><span class="key line k-s1" aria-hidden="true"></span>Spain</li>
+    <li><span class="key line dash k-syn" aria-hidden="true"></span>Synthetic Spain (counterfactual)</li>
+  </ul>
+  <div class="chart" data-src="d-trend" data-label="Line chart of Spain's youth activity rate and its synthetic counterpart, 2010 to 2022. The two lines match until 2019. By 2022 the synthetic Spain is at 35.8% and the real one at 32.6%."></div>
+  <figcaption>Source: Eurostat. The synthetic series is redrawn from the thesis estimates.
+  <details class="numbers"><summary>Show the numbers</summary>
+    <div class="scroll"><table>
+      <thead><tr><th scope="col">Year</th><th scope="col">Spain</th><th scope="col">Synthetic Spain</th><th scope="col">Gap (points)</th></tr></thead>
+      <tbody>
+        <tr><td>2010</td><td>42.7</td><td>42.7</td><td>0.0</td></tr>
+        <tr><td>2011</td><td>40.9</td><td>40.9</td><td>0.0</td></tr>
+        <tr><td>2012</td><td>39.0</td><td>39.2</td><td>−0.2</td></tr>
+        <tr><td>2013</td><td>37.8</td><td>37.7</td><td>0.1</td></tr>
+        <tr><td>2014</td><td>35.7</td><td>35.8</td><td>−0.1</td></tr>
+        <tr><td>2015</td><td>34.7</td><td>34.8</td><td>−0.1</td></tr>
+        <tr><td>2016</td><td>33.0</td><td>34.1</td><td>−1.1</td></tr>
+        <tr><td>2017</td><td>33.3</td><td>33.0</td><td>0.3</td></tr>
+        <tr><td>2018</td><td>33.0</td><td>32.6</td><td>0.4</td></tr>
+        <tr><td>2019</td><td>33.0</td><td>33.1</td><td>−0.1</td></tr>
+        <tr><td>2020</td><td>29.9</td><td>29.0</td><td>0.9</td></tr>
+        <tr><td>2021</td><td>31.5</td><td>33.5</td><td>−2.0</td></tr>
+        <tr><td>2022</td><td>32.6</td><td>35.8</td><td>−3.2</td></tr>
+      </tbody>
+    </table></div>
+  </details>
+  </figcaption>
+</figure>
+<p>Before the reform the two series sit almost on top of each other. After it, Spain fell to about 30% in 2020 along with everyone else, but its synthetic counterpart recovered faster, reaching about 36% by 2022 against roughly 32.5% for Spain. The estimated effect is close to zero in 2019, slightly positive in 2020 and negative in 2021 and 2022, and its confidence interval includes zero in every year.</p>
+
+<h2>Robustness and limits</h2>
+<figure>
+  <p class="fig-title">Spain's estimated effect sits in the middle of the placebo countries</p>
+  <p class="fig-sub">Average estimated effect, 2019 to 2022, in percentage points. Each comparison country goes through the same model as if it had raised its minimum wage in 2019.</p>
+  <ul class="hbars" style="--max:7">
+    <li class="show" tabindex="-1"><span class="lab">Netherlands</span><span class="track"><span class="bar pos" style="--v:6.5"></span></span><span class="val">+6.5</span></li>
+    <li tabindex="-1"><span class="lab">Ireland</span><span class="track"><span class="bar pos" style="--v:5.0"></span></span><span class="val">+5.0</span></li>
+    <li tabindex="-1"><span class="lab">Hungary</span><span class="track"><span class="bar pos" style="--v:4.7"></span></span><span class="val">+4.7</span></li>
+    <li tabindex="-1"><span class="lab">Belgium</span><span class="track"><span class="bar pos" style="--v:4.1"></span></span><span class="val">+4.1</span></li>
+    <li tabindex="-1"><span class="lab">Croatia</span><span class="track"><span class="bar pos" style="--v:0.7"></span></span><span class="val">+0.7</span></li>
+    <li tabindex="-1"><span class="lab">France</span><span class="track"><span class="bar pos" style="--v:0.6"></span></span><span class="val">+0.6</span></li>
+    <li tabindex="-1"><span class="lab">Malta</span><span class="track"><span class="bar pos" style="--v:0.2"></span></span><span class="val">+0.2</span></li>
+    <li class="hl show" tabindex="-1"><span class="lab">Spain</span><span class="track"><span class="bar neg" style="--v:1.1"></span></span><span class="val">−1.1</span></li>
+    <li tabindex="-1"><span class="lab">Slovenia</span><span class="track"><span class="bar neg" style="--v:1.4"></span></span><span class="val">−1.4</span></li>
+    <li tabindex="-1"><span class="lab">Poland</span><span class="track"><span class="bar neg" style="--v:2.0"></span></span><span class="val">−2.0</span></li>
+    <li tabindex="-1"><span class="lab">Czechia</span><span class="track"><span class="bar neg" style="--v:3.1"></span></span><span class="val">−3.1</span></li>
+    <li tabindex="-1"><span class="lab">Latvia</span><span class="track"><span class="bar neg" style="--v:4.2"></span></span><span class="val">−4.2</span></li>
+    <li tabindex="-1"><span class="lab">Estonia</span><span class="track"><span class="bar neg" style="--v:5.5"></span></span><span class="val">−5.5</span></li>
+    <li class="show" tabindex="-1"><span class="lab">Portugal</span><span class="track"><span class="bar neg" style="--v:6.8"></span></span><span class="val">−6.8</span></li>
+  </ul>
+  <figcaption>Redrawn from the thesis placebo test.
+  <details class="numbers"><summary>Show the numbers</summary>
+    <div class="scroll"><table>
+      <thead><tr><th scope="col">Country</th><th scope="col">Average effect, 2019 to 2022 (points)</th></tr></thead>
+      <tbody>
+        <tr><td>Netherlands</td><td>+6.5</td></tr><tr><td>Ireland</td><td>+5.0</td></tr><tr><td>Hungary</td><td>+4.7</td></tr><tr><td>Belgium</td><td>+4.1</td></tr><tr><td>Croatia</td><td>+0.7</td></tr><tr><td>France</td><td>+0.6</td></tr><tr><td>Malta</td><td>+0.2</td></tr><tr><td>Spain</td><td>−1.1</td></tr><tr><td>Slovenia</td><td>−1.4</td></tr><tr><td>Poland</td><td>−2.0</td></tr><tr><td>Czechia</td><td>−3.1</td></tr><tr><td>Latvia</td><td>−4.2</td></tr><tr><td>Estonia</td><td>−5.5</td></tr><tr><td>Portugal</td><td>−6.8</td></tr>
+      </tbody>
+    </table></div>
+  </details>
+  </figcaption>
+</figure>
+<p>The placebo test is the decisive check. Running the same model as if each comparison country had been treated in 2019 produces gaps as large as Spain's or larger, in both directions. A synthetic-control gap can only be read as causal when the treated country is a clear outlier, and Spain isn't one.</p>
+<p>Three things limit what this design can say. The treatment is coded as on or off, which ignores that the increase bit much harder in some sectors, regions and wage levels than in others. The data are annual and aggregate, with four post-reform years, one of them 2020. And it rests on a single identification strategy. The design could have detected a large effect and didn't find one, but it can't tell a true zero apart from an effect that is small or slow to appear. The result is also compatible with Banco de España's finding of job losses among young workers after the same reform, because employment and participation are different margins.</p>
+
+<h2>What I would do differently</h2>
+<p>Start from microdata. The Spanish Labour Force Survey would let me build a continuous measure of exposure from each worker's distance to the new floor, with the cross-country panel as a robustness check instead of the headline. I would also want difference-in-differences and a design built around the wage distribution to point the same way before trusting any single estimate.</p>
+</article>
+</main>
+<nav class="next" aria-label="Next case">Next case<br><a href="el-corte-ingles.html">A sales decline blamed on one product was really about small orders</a></nav>
+<footer>© 2026 Alfonso Vega de Seoane · <a href="../index.html#contact">Contact</a></footer>
+</div>
+<script type="application/json" id="d-trend">{"x":[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022],"yMin":27,"yMax":44,"yTicks":[30,35,40],"marker":{"x":2019,"label":"2019 increase","short":"2019"},"gapLabel":"Gap","series":[{"name":"Spain","short":"Spain","cls":"s1","values":[42.7,40.9,39.0,37.8,35.7,34.7,33.0,33.3,33.0,33.0,29.9,31.5,32.6]},{"name":"Synthetic Spain","short":"Synthetic","cls":"syn","values":[42.7,40.9,39.2,37.7,35.8,34.8,34.1,33.0,32.6,33.1,29.0,33.5,35.8]}]}</script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

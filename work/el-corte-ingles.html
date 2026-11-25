@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small orders and holdout tests · Alfonso Vega de Seoane</title>
+<meta name="description" content="How a beverage category's decline was traced to small restocking orders, and how CRM campaigns were measured against holdout groups at El Corte Inglés.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://alfonso-vega-jaquete.github.io/work/el-corte-ingles.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A sales decline blamed on one product was really about small orders">
+<meta property="og:description" content="Business analytics at El Corte Inglés: root-cause analysis and holdout-tested CRM campaigns. Case study by Alfonso Vega de Seoane.">
+<meta property="og:url" content="https://alfonso-vega-jaquete.github.io/work/el-corte-ingles.html">
+<meta property="og:image" content="https://alfonso-vega-jaquete.github.io/assets/og-card.jpg">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="case-page">
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Alfonso Vega de Seoane</a><span aria-hidden="true">/</span><a href="../index.html#work">Selected work</a></nav>
+<main id="main">
+<article>
+<h1>A sales decline blamed on one product was really about small orders</h1>
+<p class="lede">A beverage category at El Corte Inglés was losing small-order sales, and the high-value product that had been flagged wasn't the reason. I traced the decline to small restocking orders and recommended targeted small-basket promotions, which took small-order sales from −12% to +2%, about €1M.</p>
+
+<dl class="glance">
+  <dt>Context</dt><dd>El Corte Inglés, Madrid. Business Analyst from April 2025 to August 2026, after the Excellence Program internship (September 2024 to March 2025).</dd>
+  <dt>Role</dt><dd>Analysis and recommendations, presented to category and purchasing leadership</dd>
+  <dt>Methods</dt><dd>SQL customer analytics on a six-million-customer base, matched holdout experiments</dd>
+  <dt>Tools</dt><dd>SQL, Snowflake, Excel</dd>
+  <dt>Confidentiality</dt><dd>Customer data, category names and margins stay internal. Every figure on this page is one I can share.</dd>
+</dl>
+
+<div class="stats">
+  <div class="stat"><div class="v">−12% → +2%</div><div class="l">Small-order sales in the beverage category</div></div>
+  <div class="stat"><div class="v">≈ €1M</div><div class="l">Estimated impact of the turnaround</div></div>
+  <div class="stat"><div class="v">+15%</div><div class="l">New customers against holdout groups</div></div>
+  <div class="stat"><div class="v">+4 pts</div><div class="l">Retention, most cost-efficient offer</div></div>
+</div>
+
+<h2>Problem</h2>
+<p>Small-order sales in a beverage category were down 12%, and the attention was on one high-value product that had been flagged as the cause.</p>
+
+<h2>Approach</h2>
+<p>I broke the category's sales down in Snowflake and found that the decline came from small restocking orders, not from the flagged product. The judgment call was following that breakdown instead of the explanation the business already had.</p>
+
+<h2>Result</h2>
+<p>I recommended targeted promotions for small baskets. Small-order sales went from −12% to +2%, worth about €1M.</p>
+
+<h2>Measuring what campaigns really added</h2>
+<p>The same question, what actually caused a change, ran through my CRM work. Across about 15 campaigns I compared customers who received an offer with matched holdout groups who didn't, so each campaign was measured against what would have happened anyway. The tests showed 15% more new customers than the holdouts, and comparing offers on incremental results rather than raw response pointed to the most cost-efficient design, which lifted retention by 4 points.</p>
+<p>I also built the first automated dashboard for category leadership, with SQL in Snowflake feeding Excel. It was live in six categories when I left, with a roadmap to about 20, and replaced an estimated 10 hours of manual reporting per category.</p>
+
+<h2>Robustness and limits</h2>
+<p>The holdout groups are what make the campaign figures credible: they measure what the campaigns caused, not what happened at the same time. The beverage result is a before-and-after comparison, so part of the swing could come from the market rather than the promotions.</p>
+
+<h2>What I would do differently</h2>
+<p>Keep a holdout on the promotions too, so the beverage result would carry the same weight as the campaign tests.</p>
+</article>
+</main>
+<nav class="next" aria-label="Next case">Next case<br><a href="pay-gap-parenthood.html">A gender pay gap that turned out to be a parenthood gap</a></nav>
+<footer>© 2026 Alfonso Vega de Seoane · <a href="../index.html#contact">Contact</a></footer>
+</div>
+</body>
+</html>
