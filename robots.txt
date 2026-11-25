@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alfonso-vega-jaquete.github.io/sitemap.xml
